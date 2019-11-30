@@ -55,26 +55,30 @@ public class CreativeItemFilter extends JavaPlugin implements Listener {
 						.forEach(entry -> entry.getValue().stream().filter(mod -> mod.getAmount() <= 10)
 								.forEach(atr -> newMeta.addAttributeModifier(entry.getKey(), atr)));
 			}
+			// copy modeldata
+			if (oldItem.getItemMeta().hasCustomModelData()) {
+				newItem.getItemMeta().setCustomModelData(oldItem.getItemMeta().getCustomModelData());
+			}
+			// copy damage
+			if (oldItem.getItemMeta() instanceof Damageable) {
+				Damageable dOmeta = (Damageable) oldItem.getItemMeta();
+				Damageable dNmeta = (Damageable) newItem.getItemMeta();
+				if (dOmeta.hasDamage()) {
+					dNmeta.setDamage(dOmeta.getDamage());
+					newItem.setItemMeta((ItemMeta) dNmeta);
+				}
+			}
+			// copy repaircost
+			if (oldItem.getItemMeta() instanceof Repairable) {
+				Repairable rOmeta = (Repairable) oldItem.getItemMeta();
+				Repairable rNmeta = (Repairable) newItem.getItemMeta();
+				if (rOmeta.hasRepairCost()) {
+					rNmeta.setRepairCost(rOmeta.getRepairCost());
+					newItem.setItemMeta((ItemMeta) rNmeta);
+				}
+			}
 			// set new meta
 			newItem.setItemMeta(newMeta);
-		}
-		// copy damage
-		if (oldItem.getItemMeta() instanceof Damageable) {
-			Damageable dOmeta = (Damageable) oldItem.getItemMeta();
-			Damageable dNmeta = (Damageable) newItem.getItemMeta();
-			if (dOmeta.hasDamage()) {
-				dNmeta.setDamage(dOmeta.getDamage());
-				newItem.setItemMeta((ItemMeta) dNmeta);
-			}
-		}
-		// copy repaircost
-		if (oldItem.getItemMeta() instanceof Repairable) {
-			Repairable rOmeta = (Repairable) oldItem.getItemMeta();
-			Repairable rNmeta = (Repairable) newItem.getItemMeta();
-			if (rOmeta.hasRepairCost()) {
-				rNmeta.setRepairCost(rOmeta.getRepairCost());
-				newItem.setItemMeta((ItemMeta) rNmeta);
-			}
 		}
 		return newItem;
 	}
