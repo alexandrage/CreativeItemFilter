@@ -1,6 +1,7 @@
 package creativeitemfilter;
 
 import java.util.stream.Collectors;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCreativeEvent;
@@ -12,17 +13,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 import creativeitemfilter.utils.StringUtils;
 
 public class CreativeItemFilter extends JavaPlugin implements Listener {
-	public CreativeItemFilter plugin;
 
 	@Override
 	public void onEnable() {
-		plugin = this;
+		Bukkit.getPluginManager().registerEvents(this, this);
 	}
 
 	private final MetaCopierFactory metaCopierFactory = new MetaCopierFactory(this);
 
 	@EventHandler
 	public void onCreativeItemEvent(InventoryCreativeEvent event) {
+		System.out.println("InventoryCreativeEvent");
 		ItemStack oldItem = event.getCursor();
 		// set new item
 		event.setCursor(copyItemMeta(oldItem));
