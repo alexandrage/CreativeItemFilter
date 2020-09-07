@@ -14,6 +14,7 @@ import org.bukkit.inventory.meta.KnowledgeBookMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.MapMeta;
 import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.inventory.meta.SuspiciousStewMeta;
 import org.bukkit.inventory.meta.TropicalFishBucketMeta;
 import creativeitemfilter.meta.BannerMetaCopier;
@@ -23,6 +24,7 @@ import creativeitemfilter.meta.CompassMetaCopier;
 import creativeitemfilter.meta.CrossbowMetaCopier;
 import creativeitemfilter.meta.NoOpMetaCopier;
 import creativeitemfilter.meta.PotionMetaCopier;
+import creativeitemfilter.meta.SkullMetaCopier;
 import creativeitemfilter.meta.SuspiciousStewMetaCopier;
 import creativeitemfilter.meta.TropicalFishBucketMetaCopier;
 import creativeitemfilter.meta.EnchantmentStorageMetaCopier;
@@ -77,6 +79,8 @@ public class MetaCopierFactory {
 			return cache(metaClass, KnowledgeBookMetaCopier.INSTANCE);
 		} else if (oldMeta instanceof SuspiciousStewMeta) {
 			return cache(metaClass, SuspiciousStewMetaCopier.INSTANCE);
+		} else if (oldMeta instanceof SkullMeta) {
+			return cache(metaClass, SkullMetaCopier.INSTANCE);
 		}
 		return NoOpMetaCopier.INSTANCE;
 	}

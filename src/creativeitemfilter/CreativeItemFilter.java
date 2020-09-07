@@ -23,7 +23,6 @@ public class CreativeItemFilter extends JavaPlugin implements Listener {
 
 	@EventHandler
 	public void onCreativeItemEvent(InventoryCreativeEvent event) {
-		System.out.println("InventoryCreativeEvent");
 		ItemStack oldItem = event.getCursor();
 		// set new item
 		event.setCursor(copyItemMeta(oldItem));
