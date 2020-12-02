@@ -24,13 +24,9 @@ public class CreativeItemFilter extends JavaPlugin implements Listener {
 	@EventHandler
 	public void onCreativeItemEvent(InventoryCreativeEvent event) {
 		ItemStack cursor = event.getCursor();
-		ItemStack current = event.getCurrentItem();
 		// set new item
 		if (cursor != null) {
 			event.setCursor(copyItemMeta(cursor));
-		}
-		if (current != null) {
-			event.setCurrentItem(copyItemMeta(current));
 		}
 	}
 
