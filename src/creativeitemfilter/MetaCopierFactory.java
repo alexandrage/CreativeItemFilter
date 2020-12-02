@@ -37,57 +37,55 @@ import creativeitemfilter.meta.MetaCopier;
 
 public class MetaCopierFactory {
 	private CreativeItemFilter plugin;
-	private BlockStateMetaCopier bsmc;
 	private final HashMap<Class<? extends ItemMeta>, MetaCopier<ItemMeta>> copierCache = new HashMap<>();
 
 	public MetaCopierFactory(CreativeItemFilter plugin) {
 		this.plugin = plugin;
-		bsmc = new BlockStateMetaCopier(this.plugin);
 	}
 
 	public MetaCopier<ItemMeta> getCopier(ItemMeta oldMeta) {
 		Class<? extends ItemMeta> metaClass = oldMeta.getClass();
-		MetaCopier<ItemMeta> cached = copierCache.get(metaClass);
+		MetaCopier<ItemMeta> cached = this.copierCache.get(metaClass);
 		if (cached != null) {
 			return cached;
 		}
 		if (oldMeta instanceof BannerMeta) {
-			return cache(metaClass, BannerMetaCopier.INSTANCE);
+			return this.cache(metaClass, BannerMetaCopier.INSTANCE);
 		} else if (oldMeta instanceof EnchantmentStorageMeta) {
-			return cache(metaClass, EnchantmentStorageMetaCopier.INSTANCE);
+			return this.cache(metaClass, EnchantmentStorageMetaCopier.INSTANCE);
 		} else if (oldMeta instanceof BookMeta) {
-			return cache(metaClass, BookMetaCopier.INSTANCE);
+			return this.cache(metaClass, BookMetaCopier.INSTANCE);
 		} else if (oldMeta instanceof PotionMeta) {
-			return cache(metaClass, PotionMetaCopier.INSTANCE);
+			return this.cache(metaClass, PotionMetaCopier.INSTANCE);
 		} else if (oldMeta instanceof LeatherArmorMeta) {
-			return cache(metaClass, LeatherArmorMetaCopier.INSTANCE);
+			return this.cache(metaClass, LeatherArmorMetaCopier.INSTANCE);
 		} else if (oldMeta instanceof TropicalFishBucketMeta) {
-			return cache(metaClass, TropicalFishBucketMetaCopier.INSTANCE);
+			return this.cache(metaClass, TropicalFishBucketMetaCopier.INSTANCE);
 		} else if (oldMeta instanceof FireworkMeta) {
-			return cache(metaClass, FireworkMetaCopier.INSTANCE);
+			return this.cache(metaClass, FireworkMetaCopier.INSTANCE);
 		} else if (oldMeta instanceof FireworkEffectMeta) {
-			return cache(metaClass, FireworkEffectMetaCopier.INSTANCE);
+			return this.cache(metaClass, FireworkEffectMetaCopier.INSTANCE);
 		} else if (oldMeta instanceof MapMeta) {
-			return cache(metaClass, MapMetaCopier.INSTANCE);
+			return this.cache(metaClass, MapMetaCopier.INSTANCE);
 		} else if (oldMeta instanceof BlockStateMeta) {
-			return cache(metaClass, bsmc);
+			return this.cache(metaClass, new BlockStateMetaCopier(this.plugin));
 		} else if (oldMeta instanceof CompassMeta) {
-			return cache(metaClass, CompassMetaCopier.INSTANCE);
+			return this.cache(metaClass, CompassMetaCopier.INSTANCE);
 		} else if (oldMeta instanceof CrossbowMeta) {
-			return cache(metaClass, CrossbowMetaCopier.INSTANCE);
+			return this.cache(metaClass, CrossbowMetaCopier.INSTANCE);
 		} else if (oldMeta instanceof KnowledgeBookMeta) {
-			return cache(metaClass, KnowledgeBookMetaCopier.INSTANCE);
+			return this.cache(metaClass, KnowledgeBookMetaCopier.INSTANCE);
 		} else if (oldMeta instanceof SuspiciousStewMeta) {
-			return cache(metaClass, SuspiciousStewMetaCopier.INSTANCE);
+			return this.cache(metaClass, SuspiciousStewMetaCopier.INSTANCE);
 		} else if (oldMeta instanceof SkullMeta) {
-			return cache(metaClass, SkullMetaCopier.INSTANCE);
+			return this.cache(metaClass, SkullMetaCopier.INSTANCE);
 		}
 		return NoOpMetaCopier.INSTANCE;
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	protected MetaCopier<ItemMeta> cache(Class<? extends ItemMeta> clazz, MetaCopier copier) {
-		copierCache.put(clazz, copier);
+		this.copierCache.put(clazz, copier);
 		return copier;
 	}
 }

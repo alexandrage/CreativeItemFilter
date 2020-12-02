@@ -23,14 +23,24 @@ public class CreativeItemFilter extends JavaPlugin implements Listener {
 
 	@EventHandler
 	public void onCreativeItemEvent(InventoryCreativeEvent event) {
-		ItemStack oldItem = event.getCursor();
+		ItemStack cursor = event.getCursor();
+		ItemStack current = event.getCurrentItem();
 		// set new item
-		event.setCursor(copyItemMeta(oldItem));
-		event.setCurrentItem(copyItemMeta(oldItem));
+		if (cursor != null) {
+			event.setCursor(copyItemMeta(cursor));
+		}
+		if (current != null) {
+			event.setCurrentItem(copyItemMeta(current));
+		}
 	}
 
 	public ItemStack copyItemMeta(ItemStack oldItem) {
 		ItemStack newItem = new ItemStack(oldItem.getType(), oldItem.getAmount());
+		int max = newItem.getMaxStackSize();
+		// MaxStackSize
+		if(newItem.getAmount() > max) {
+			newItem.setAmount(max);
+		}
 		// handle meta
 		if (oldItem.hasItemMeta()) {
 			// get meta
