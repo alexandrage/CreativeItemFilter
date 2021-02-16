@@ -1,6 +1,5 @@
 package creativeitemfilter;
 
-import java.util.stream.Collectors;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -34,7 +33,7 @@ public class CreativeItemFilter extends JavaPlugin implements Listener {
 		ItemStack newItem = new ItemStack(oldItem.getType(), oldItem.getAmount());
 		int max = newItem.getMaxStackSize();
 		// MaxStackSize
-		if(newItem.getAmount() > max) {
+		if (newItem.getAmount() > max) {
 			newItem.setAmount(max);
 		}
 		// handle meta
@@ -49,7 +48,7 @@ public class CreativeItemFilter extends JavaPlugin implements Listener {
 			}
 			// copy lore
 			if (oldMeta.hasLore()) {
-				newMeta.setLore(oldMeta.getLore().stream().map(StringUtils::clampString).collect(Collectors.toList()));
+				newMeta.setLoreComponents(oldMeta.getLoreComponents());
 			}
 			// copy enchantments
 			oldItem.getEnchantments().entrySet().stream()
@@ -63,7 +62,9 @@ public class CreativeItemFilter extends JavaPlugin implements Listener {
 			}
 			// copy modeldata
 			if (oldItem.getItemMeta().hasCustomModelData()) {
-				newItem.getItemMeta().setCustomModelData(oldItem.getItemMeta().getCustomModelData());
+				ItemMeta cNmeta = newItem.getItemMeta();
+				cNmeta.setCustomModelData(oldItem.getItemMeta().getCustomModelData());
+				newItem.setItemMeta(cNmeta);
 			}
 			// copy damage
 			if (oldItem.getItemMeta() instanceof Damageable) {
